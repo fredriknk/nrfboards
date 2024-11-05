@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
  */
 #include "msenseThingy_nrf9160_common-pinctrl.dtsi"
+#include <dt-bindings/regulator/npm1300.h>
 
 / {
 	model = "Nordic Thingy91 nRF9160";
@@ -19,49 +20,27 @@
 		compatible = "gpio-keys";
 
 		button0: button_0 {
-			gpios = <&gpio0 26 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			gpios = <&gpio0 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Button 1";
 		};
 	};
 
 	leds {
 		compatible = "gpio-leds";
-		red_led: led_1 {
-			gpios = <&gpio0 29 0>;
-			label = "RGB red channel";
+		led0: led_0 {
+			gpios = <&gpio0 6 GPIO_OPEN_DRAIN>;
+			label = "Led 0";
 		};
-		green_led: led_2 {
-			gpios = <&gpio0 30 0>;
-			label = "RGB green channel";
-		};
-		blue_led: led_3 {
-			gpios = <&gpio0 31 0>;
-			label = "RGB blue channel";
-		};
-		sense_red_led: led_4 {
-			gpios = <&gpio0 0 0>;
-			label = "RGB red channel";
-		};
-		sense_green_led: led_5 {
-			gpios = <&gpio0 1 0>;
-			label = "RGB green channel";
-		};
-		sense_blue_led: led_6 {
-			gpios = <&gpio0 2 0>;
-			label = "RGB blue channel";
+		led1: led_1 {
+			gpios = <&gpio0 5 GPIO_OPEN_DRAIN>;
+			label = "Led 1";
 		};
 	};
 
 	pwmleds {
 		compatible = "pwm-leds";
 		pwm_led0: pwm_led_0 {
-			pwms = <&pwm0 0 PWM_MSEC(8) PWM_POLARITY_NORMAL>;
-		};
-		pwm_led1: pwm_led_1 {
-			pwms = <&pwm0 1 PWM_MSEC(8) PWM_POLARITY_NORMAL>;
-		};
-		pwm_led2: pwm_led_2 {
-			pwms = <&pwm0 2 PWM_MSEC(8) PWM_POLARITY_NORMAL>;
+			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_INVERTED>;
 		};
 	};
 
@@ -73,19 +52,12 @@
 
 	aliases {
 		sw0 = &button0;
-		led0 = &red_led;
-		led1 = &green_led;
-		led2 = &blue_led;
-		sense-led0 = &sense_red_led;
-		sense-led1 = &sense_green_led;
-		sense-led2 = &sense_blue_led;
+		led0 = &led0;
+		led1 = &led1;
+		bootloader-led0 = &led0;
 		pwm-led0 = &pwm_led0;
-		pwm-led1 = &pwm_led1;
-		pwm-led2 = &pwm_led2;
-		rgb-pwm = &pwm0;
-		nmos-pwm = &pwm2;
 		mcuboot-button0 = &button0;
-		mcuboot-led0 = &blue_led;
+		mcuboot-led0 = &led0;
 	};
 };
 
@@ -109,22 +81,6 @@
 	pinctrl-names = "default", "sleep";
 };
 
-/* PWM1 is intended for buzzer control */
-&pwm1 {
-	status = "okay";
-	pinctrl-0 = <&pwm1_default>;
-	pinctrl-1 = <&pwm1_sleep>;
-	pinctrl-names = "default", "sleep";
-};
-
-/* PWM2 is intended for NMOS transistor control */
-&pwm2 {
-	status = "okay";
-	pinctrl-0 = <&pwm2_default>;
-	pinctrl-1 = <&pwm2_sleep>;
-	pinctrl-names = "default", "sleep";
-};
-
 &i2c2 {
 	compatible = "nordic,nrf-twim";
 	status = "okay";
@@ -138,57 +94,79 @@
 		reg = <0x76>;
 	};
 
-	bh1749: bh1749@38 {
-		compatible = "rohm,bh1749";
-		reg = <0x38>;
-		int-gpios = <&gpio0 27 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-	};
-
-	pmic@46 {
-		compatible = "adi,adp5360";
-		reg = <0x46>;
-
-		regulators {
-			compatible = "adi,adp5360-regulator";
-
-			BUCK {
-				regulator-min-microvolt = <1800000>;
-				regulator-max-microvolt = <1800000>;
-				regulator-init-microvolt = <1800000>;
-				regulator-always-on;
-				adi,enable-output-discharge;
-			};
-
-			BUCKBOOST {
-				regulator-min-microvolt = <3300000>;
-				regulator-max-microvolt = <3300000>;
-				regulator-init-microvolt = <3300000>;
-				regulator-always-on;
-			};
+	npm1300_ek_pmic: pmic@6b {
+		compatible = "nordic,npm1300";
+		reg = <0x6b>;
+ 
+	 	// long-press-reset = "one_button";
+	 	// ship-to-active-time = <96>;
+ 
+		npm1300_ek_gpio: gpio-controller {
+			compatible = "nordic,npm1300-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <5>;
 		};
-	};
-};
+ 
+		npm1300_ek_regulators: regulators {
+			compatible = "nordic,npm1300-regulator";
+ 
+						
+			npm1300_ek_buck1: BUCK1 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				
+				retention-microvolt = <2000000>;
+			};
+			
 
-&spi3 {
-	compatible = "nordic,nrf-spim";
-	status = "okay";
-	cs-gpios = <&gpio0 8 GPIO_ACTIVE_LOW>, <&gpio0 7 GPIO_ACTIVE_LOW>;
-
-	pinctrl-0 = <&spi3_default>;
-	pinctrl-1 = <&spi3_sleep>;
-	pinctrl-names = "default", "sleep";
-	adxl362: adxl362@0 {
-		compatible = "adi,adxl362";
-		spi-max-frequency = <8000000>;
-		reg = <0>;
-		int1-gpios = <&gpio0 9 0>;
-	};
-
-	adxl372: adxl372@1 {
-		compatible = "adi,adxl372";
-		spi-max-frequency = <8000000>;
-		reg = <1>;
-		int1-gpios = <&gpio0 6 0>;
+			npm1300_ek_buck2: BUCK2 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				
+				retention-microvolt = <1000000>;
+			};
+			
+			npm1300_ek_ldo1: LDO1 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+				// soft-start-microamp = <20000>;
+			};
+			
+			npm1300_ek_ldo2: LDO2 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+				// soft-start-microamp = <20000>;
+				regulator-boot-on;
+			};
+			
+		};
+ 
+				
+		npm1300_ek_charger: charger {
+			compatible = "nordic,npm1300-charger";
+			term-microvolt = <3500000>;
+			term-warm-microvolt = <3600000>;
+			// term-current-percent = <10>;
+			current-microamp = <100000>;
+			// trickle-microvolt = <2500000>;
+			dischg-limit-microamp = <1340000>;
+			vbus-limit-microamp = <500000>;
+			thermistor-ohms = <10000>;
+			thermistor-beta = <3380>;
+			charging-enable;
+		};
+		
+				
+		npm1300_ek_leds: leds {
+			compatible = "nordic,npm1300-led";
+			nordic,led0-mode = "error";    
+			nordic,led1-mode = "charging";    
+			nordic,led2-mode = "host";
+		};
+		
 	};
 };
 
