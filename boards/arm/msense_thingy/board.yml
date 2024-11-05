@@ -1,0 +1,8 @@
+board:
+  name: msenseThingy
+  vendor: nordic
+  socs:
+    - name: nrf52840
+    - name: nrf9160
+      variants:
+        - name: ns

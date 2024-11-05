@@ -1,0 +1,6 @@
+# Copyright (c) 2024 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_MSENSE_DEV
+	bool "msense-dev"
+	depends on SOC_NRF9160_SICA
