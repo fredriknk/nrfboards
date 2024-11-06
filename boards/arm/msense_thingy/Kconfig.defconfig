@@ -15,7 +15,7 @@ if BOARD_MSENSETHINGY_NRF9160 || BOARD_MSENSETHINGY_NRF9160_NS
 
 # Enable Zephyr power regulator ADP536x
 config REGULATOR
-	default n
+	default y
 	depends on !IS_BOOTLOADER_IMG
 
 # By default, if we build for a Non-Secure version of the board,

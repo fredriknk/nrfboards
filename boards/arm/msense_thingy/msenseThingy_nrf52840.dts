@@ -9,7 +9,7 @@
 #include "msenseThingy_nrf52840-pinctrl.dtsi"
 
 / {
-	model = "Nordic Thingy91 NRF52840";
+	model = "Nordic MsenseThingy NRF52840";
 	compatible = "nordic,msenseThingy-nrf52840";
 
 	chosen {

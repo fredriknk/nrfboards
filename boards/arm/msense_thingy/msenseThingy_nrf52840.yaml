@@ -1,5 +1,5 @@
 identifier: msenseThingy/nrf52840
-name: Thingy91-NRF52840
+name: MsenseThingy-NRF52840
 type: mcu
 arch: arm
 toolchain:

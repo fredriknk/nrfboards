@@ -1,7 +1,7 @@
 # Copyright (c) 2021 Nordic Semiconductor ASA
 # SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
 
-description: GPIO used to reset nRF52840 on Thingy:91
+description: GPIO used to reset nRF52840 on Msense:Thingy
 
 compatible: "nordic,msenseThingy-nrf52840-reset"
 

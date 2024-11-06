@@ -1,5 +1,5 @@
 identifier: msenseThingy/nrf9160
-name: Thingy91-NRF9160
+name: MsenseThingy-NRF9160
 type: mcu
 arch: arm
 toolchain:
