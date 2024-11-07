@@ -20,3 +20,22 @@
 &uart1 {
 	status = "disabled";
 };
+
+&i2c2 {
+	compatible = "nordic,nrf-twim";
+	status = "okay";
+	pinctrl-0 = <&i2c2_default>;
+	pinctrl-1 = <&i2c2_sleep>;
+	pinctrl-names = "default", "sleep";
+
+	bme680: bme680@76 {
+		compatible = "bosch,bme680";
+		reg = <0x76>;
+	};
+
+	bh1749: bh1749@38 {
+		compatible = "rohm,bh1749";
+		reg = <0x38>;
+		int-gpios = <&gpio0 27 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+	};
+};
