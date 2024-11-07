@@ -1,7 +1,7 @@
 # Copyright 2021 Nordic Semiconductor ASA
 # SPDX-License-Identifier: Apache-2.0
 
-description: nRF9160 DK optional routing provided by analog switch
+description: msense DK optional routing provided by analog switch
 
 compatible: "nordic,msensedk-optional-routing"
 

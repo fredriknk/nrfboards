@@ -10,7 +10,7 @@
 #include "msensedk_nrf52840-pinctrl.dtsi"
 
 / {
-	model = "Nordic nRF9160 DK NRF52840";
+	model = "Nordic msense DK NRF52840";
 	compatible = "nordic,nrf9160-dk-nrf52840";
 
 	chosen {
@@ -24,7 +24,7 @@
 		zephyr,ieee802154 = &ieee802154;
 	};
 
-	interface_to_nrf9160: gpio-interface {
+	interface_to_msensedk: gpio-interface {
 		compatible = "nordic,msensedk-nrf52840-interface";
 		#gpio-cells = <2>;
 		gpio-map-mask = <0xf 0>;
@@ -158,7 +158,7 @@
 };
 
 /* The nRF52840 SoC does not have any connection to the any of the LEDs,
- * buttons, switches and Arduino pin headers on the nRF9160 DK board.
+ * buttons, switches and Arduino pin headers on the msense DK board.
  */
 
 &uart0 {

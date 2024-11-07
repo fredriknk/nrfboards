@@ -5,7 +5,7 @@
 #       Any changes should be done in both instances.
 
 description: |
-    nRF9160 DK GPIO interface between nRF9160 and nRF52840
+    msense DK GPIO interface between nRF9160 and nRF52840
 
     This interface can be used for inter-SoC communication on the DK.
     The connections are as follows:
@@ -31,9 +31,9 @@ description: |
     - `nrf_interface_pins_3_5_routing` to enable lines 3-5
     - `nrf_interface_pins_6_8_routing` to enable lines 6-8
     - `nrf_interface_pin_9_routing` to enable line 9 (this line is only
-      available in nRF9160 DK v0.14.0 or later)
+      available in msense DK v0.14.0 or later)
 
-    NOTE: In nRF9160 DK revisions earlier than v0.14.0, when the above signals
+    NOTE: In msense DK revisions earlier than v0.14.0, when the above signals
           from nRF9160 are routed to nRF52840, they are not available on the DK
           connectors.
 

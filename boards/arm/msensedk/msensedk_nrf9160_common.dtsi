@@ -7,7 +7,7 @@
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 / {
-	model = "Nordic nRF9160 DK NRF9160";
+	model = "Nordic msense DK NRF9160";
 	compatible = "nordic,nrf9160-dk-nrf9160";
 
 	chosen {
@@ -19,19 +19,19 @@
 	leds {
 		compatible = "gpio-leds";
 		led0: led_0 {
-			gpios = <&gpio0 2 0>;
+			gpios = <&gpio0 6 0>;
 			label = "Green LED 1";
 		};
 		led1: led_1 {
-			gpios = <&gpio0 3 0>;
+			gpios = <&gpio0 5 0>;
 			label = "Green LED 2";
 		};
 		led2: led_2 {
-			gpios = <&gpio0 4 0>;
+			gpios = <&gpio0 11 0>;
 			label = "Green LED 3";
 		};
 		led3: led_3 {
-			gpios = <&gpio0 5 0>;
+			gpios = <&gpio0 0 0>;
 			label = "Green LED 4";
 		};
 	};
@@ -46,18 +46,18 @@
 	buttons {
 		/*
 		 * Unlike most DK boards, we do not actually have 4 buttons
-		 * on nRF9160 DK. Instead, we have 2 buttons and 2 switches.
+		 * on msense DK. Instead, we have 2 buttons and 2 switches.
 		 * Treat the switches as buttons anyway, for convenience.
 		 * This makes life easier for software that wants to deal with
 		 * the usual "4 buttons per DK board" convention.
 		 */
 		compatible = "gpio-keys";
 		button0: button_0 {
-			gpios = <&gpio0 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			gpios = <&gpio0 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 1";
 			zephyr,code = <INPUT_KEY_0>;
 		};
-		button1: button_1 {
+		/*button1: button_1 {
 			gpios = <&gpio0 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 2";
 			zephyr,code = <INPUT_KEY_1>;
@@ -71,7 +71,7 @@
 			gpios = <&gpio0 9 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Switch 2";
 			zephyr,code = <INPUT_KEY_3>;
-		};
+		};*/
 	};
 
 	/* These aliases are provided for compatibility with samples */
@@ -82,9 +82,9 @@
 		led3 = &led3;
 		pwm-led0 = &pwm_led0;
 		sw0 = &button0;
-		sw1 = &button1;
+		/*sw1 = &button1;
 		sw2 = &button2;
-		sw3 = &button3;
+		sw3 = &button3;*/
 		bootloader-led0 = &led0;
 		mcuboot-button0 = &button0;
 		mcuboot-led0 = &led0;
@@ -124,11 +124,11 @@ arduino_i2c: &i2c2 {
 		reg = <0x76>;
 	};
 
-	bh1749: bh1749@38 {
+	/*bh1749: bh1749@38 {
 		compatible = "rohm,bh1749";
 		reg = <0x38>;
 		int-gpios = <&gpio0 27 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-	};
+	};*/
 };
 
 &pwm0 {

@@ -4,7 +4,7 @@
 # NOTE: This file is replicated in msensedk_nrf9160 and msensedk_nrf52840.
 #       Any changes should be done in both instances.
 
-description: GPIO used to reset nRF52840 on nRF9160 DK
+description: GPIO used to reset nRF52840 on msense DK
 
 compatible: "nordic,msensedk-nrf52840-reset"
 

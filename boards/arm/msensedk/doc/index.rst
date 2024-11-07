@@ -1,12 +1,12 @@
-.. _msensedk_nrf9160:
+.. _msensedk_msensedk:
 
-nRF9160 DK
+msense DK
 ##########
 
 Overview
 ********
 
-The nRF9160 DK (PCA10090) is a single-board development kit for evaluation and
+The msense DK (PCA10090) is a single-board development kit for evaluation and
 development on the nRF9160 SiP for LTE-M and NB-IoT. The msensedk/nrf9160
 board configuration provides support for the Nordic Semiconductor nRF9160 ARM
 Cortex-M33F CPU with ARMv8-M Security Extension and the following devices:
@@ -28,19 +28,19 @@ Cortex-M33F CPU with ARMv8-M Security Extension and the following devices:
 
 .. figure:: img/msensedk_nrf9160.jpg
      :align: center
-     :alt: nRF9160 DK
+     :alt: msense DK
 
-     nRF9160 DK (Credit: Nordic Semiconductor)
+     msense DK (Credit: Nordic Semiconductor)
 
 More information about the board can be found at the
-`nRF9160 DK website`_. `nRF9160 Product Specification`_
+`msense DK website`_. `nRF9160 Product Specification`_
 contains the processor's information and the datasheet.
 
 
 Hardware
 ********
 
-nRF9160 DK has two external oscillators. The frequency of
+msense DK has two external oscillators. The frequency of
 the slow clock is 32.768 kHz. The frequency of the main clock
 is 32 MHz.
 
@@ -95,7 +95,7 @@ Starting from v0.14.0, additional hardware is available on the DK:
 
 To use this additional hardware, specify the revision of the board that
 should be used when building your application (for more information, see
-:ref:`application_board_version`). For example, to build for nRF9160 DK v1.0.0:
+:ref:`application_board_version`). For example, to build for msense DK v1.0.0:
 
 .. zephyr-app-commands::
    :tool: all
@@ -108,8 +108,8 @@ Remember to also enable routing for this additional hardware in the firmware for
 :ref:`msensedk_nrf52840` (see :ref:`msensedk_board_controller_firmware`).
 
 Other hardware features have not been enabled yet for this board.
-See `nRF9160 DK website`_ and `nRF9160 Product Specification`_
-for a complete list of nRF9160 DK board hardware features.
+See `msense DK website`_ and `nRF9160 Product Specification`_
+for a complete list of msense DK board hardware features.
 
 Connections and IOs
 ===================
@@ -222,7 +222,7 @@ First, run your favorite terminal program to listen for output.
 
    $ minicom -D <tty_device> -b 115200
 
-Replace :code:`<tty_device>` with the port where the nRF9160 DK
+Replace :code:`<tty_device>` with the port where the msense DK
 can be found. For example, under Linux, :code:`/dev/ttyACM0`.
 
 Then build and flash the application in the usual way.
@@ -239,7 +239,7 @@ Refer to the :ref:`nordic_segger` page to learn about debugging Nordic boards wi
 Segger IC.
 
 
-Testing the LEDs and buttons in the nRF9160 DK
+Testing the LEDs and buttons in the msense DK
 **********************************************
 
 There are 2 samples that allow you to test that the buttons (switches) and LEDs on
@@ -254,13 +254,13 @@ your board. The button and LED definitions can be found in
 
 .. _msensedk_nrf52840:
 
-nRF9160 DK - nRF52840
+msense DK - nRF52840
 #####################
 
 Overview
 ********
 
-The nRF52840 SoC on the nRF9160 DK (PCA10090) hardware provides support for the
+The nRF52840 SoC on the msense DK (PCA10090) hardware provides support for the
 Nordic Semiconductor nRF52840 ARM Cortex-M4F CPU and the following devices:
 
 * CLOCK
@@ -276,7 +276,7 @@ Nordic Semiconductor nRF52840 ARM Cortex-M4F CPU and the following devices:
 * :abbr:`WDT (Watchdog Timer)`
 
 The nRF52840 SoC does not have any connection to the any of the LEDs,
-buttons, switches, and Arduino pin headers on the nRF9160 DK board. It is,
+buttons, switches, and Arduino pin headers on the msense DK board. It is,
 however, possible to route some of the pins of the nRF52840 SoC to the nRF9160
 SiP.
 
@@ -289,7 +289,7 @@ contains the processor's information and the datasheet.
 Hardware
 ********
 
-The nRF9160 DK has two external oscillators. The frequency of
+The msense DK has two external oscillators. The frequency of
 the slow clock is 32.768 kHz. The frequency of the main clock
 is 32 MHz.
 
@@ -384,7 +384,7 @@ such as LEDs and buttons, UART interfaces (VCOMx) of the interface MCU, and
 specific nRF52840 SoC pins.
 
 .. note::
-   In nRF9160 DK revisions earlier than v0.14.0, nRF9160 signals routed to
+   In msense DK revisions earlier than v0.14.0, nRF9160 signals routed to
    other components on the DK are not simultaneously available on the DK
    connectors.
 
@@ -424,14 +424,14 @@ By default, the board controller firmware will route the following:
 +--------------------------------+----------------------------------+
 
 For a complete list of all the routing options available,
-see the `nRF9160 DK board control section in the nRF9160 DK User Guide`_.
+see the `msense DK board control section in the msense DK User Guide`_.
 
 If you want to route some of the above pins differently or enable any of the
 other available routing options, enable or disable the devicetree node that
 represents the analog switch that provides the given routing.
 
 The following devicetree nodes are defined for the analog switches present
-on the nRF9160 DK:
+on the msense DK:
 
 +------------------------------------+------------------------------+
 | Devicetree node label              | Analog switch name           |
@@ -502,7 +502,7 @@ A few helper .dtsi files are provided in the directories
 :zephyr_file:`boards/nordic/msensedk/dts/nrf9160`. They can serve as examples of
 how to configure and use the above routings. You can also include them from
 respective devicetree overlay files in your applications to conveniently
-configure the signal routing between nRF9160 and nRF52840 on the nRF9160 DK.
+configure the signal routing between nRF9160 and nRF52840 on the msense DK.
 For example, to use ``uart1`` on both these chips for communication between
 them, add the following line in the overlays for applications on both sides, nRF52840:
 
@@ -510,7 +510,7 @@ them, add the following line in the overlays for applications on both sides, nRF
 
    #include <nrf52840/msensedk_uart1_on_if0_3.dtsi>
 
-nRF9160:
+msensedk:
 
 .. code-block:: devicetree
 
@@ -523,10 +523,10 @@ References
 
 .. _IDAU:
    https://developer.arm.com/docs/100690/latest/attribution-units-sau-and-idau
-.. _nRF9160 DK website: https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF9160-DK
+.. _msense DK website: https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF9160-DK
 .. _Trusted Firmware M: https://www.trustedfirmware.org/projects/tf-m/
 .. _Nordic Low power cellular IoT: https://www.nordicsemi.com/Products/Low-power-cellular-IoT
 .. _nRF9160 Product Specification: https://docs.nordicsemi.com/bundle/ps_nrf9160/page/nRF9160_html5_keyfeatures.html
 .. _nRF52840 Product Specification: https://docs.nordicsemi.com/bundle/ps_nrf52840/page/keyfeatures_html5.html
 .. _J-Link Software and documentation pack: https://www.segger.com/jlink-software.html
-.. _nRF9160 DK board control section in the nRF9160 DK User Guide: https://docs.nordicsemi.com/bundle/ug_nrf9160_dk/page/UG/nrf91_DK/hw_description/nrf9160_board_controller.html
+.. _msense DK board control section in the msense DK User Guide: https://docs.nordicsemi.com/bundle/ug_nrf9160_dk/page/UG/nrf91_DK/hw_description/nrf9160_board_controller.html

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* NOTE: this feature is only available in nRF9160 DK v0.14.0 or later. */
+/* NOTE: this feature is only available in msense DK v0.14.0 or later. */
 
 &pcal6408a {
 	status = "okay";
