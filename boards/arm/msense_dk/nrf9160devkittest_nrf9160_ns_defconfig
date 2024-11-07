@@ -1,9 +1,4 @@
-# Copyright (c) 2024 Nordic Semiconductor ASA
 # SPDX-License-Identifier: Apache-2.0
-
-CONFIG_SOC_SERIES_NRF91X=y
-CONFIG_SOC_NRF9160_SICA=y
-CONFIG_BOARD_MSENSE_DEV=y
 
 # Enable MPU
 CONFIG_ARM_MPU=y
@@ -17,7 +12,12 @@ CONFIG_ARM_TRUSTZONE_M=y
 # This Board implies building Non-Secure firmware
 CONFIG_TRUSTED_EXECUTION_NONSECURE=y
 
+# Enable GPIO
+CONFIG_GPIO=y
 
-#Periphials
-CONFIG_I2C=y
-CONFIG_ADC=y
+# Enable uart driver
+CONFIG_SERIAL=y
+
+# Enable console
+CONFIG_CONSOLE=y
+CONFIG_UART_CONSOLE=y

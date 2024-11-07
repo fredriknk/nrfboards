@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-#include "nrf9160devkittest_nrf9160_common-pinctrl.dtsi"
+#include "msensedk_nrf9160_common-pinctrl.dtsi"
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 / {
@@ -75,7 +75,7 @@
 	};
 
 	interface_to_nrf52840: gpio-interface {
-		compatible = "nordic,nrf9160devkittest-nrf52840-interface";
+		compatible = "nordic,msensedk-nrf52840-interface";
 		#gpio-cells = <2>;
 		gpio-map-mask = <0xf 0>;
 		gpio-map-pass-thru = <0 0xffffffff>;
@@ -91,7 +91,7 @@
 	};
 
 	nrf52840_reset: gpio-reset {
-		compatible = "nordic,nrf9160devkittest-nrf52840-reset";
+		compatible = "nordic,msensedk-nrf52840-reset";
 		status = "disabled";
 		/*
 		 * This line is specified as active high for compatibility
@@ -295,4 +295,4 @@ arduino_spi: &spi3 {
 };
 
 /* Include partition configuration file */
-#include "nrf9160devkittest_nrf9160_partition_conf.dtsi"
+#include "msensedk_nrf9160_partition_conf.dtsi"
