@@ -19,7 +19,7 @@
 		compatible = "gpio-keys";
 
 		button0: button_0 {
-			gpios = <&gpio0 26 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			gpios = <&gpio0 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Button 1";
 		};
 	};
@@ -27,15 +27,15 @@
 	leds {
 		compatible = "gpio-leds";
 		red_led: led_1 {
-			gpios = <&gpio0 29 0>;
+			gpios = <&gpio0 6 GPIO_OPEN_DRAIN>;
 			label = "RGB red channel";
 		};
 		green_led: led_2 {
-			gpios = <&gpio0 30 0>;
+			gpios = <&gpio0 5 GPIO_OPEN_DRAIN>;
 			label = "RGB green channel";
 		};
 		blue_led: led_3 {
-			gpios = <&gpio0 31 0>;
+			gpios = <&gpio0 11 0>;
 			label = "RGB blue channel";
 		};
 		sense_red_led: led_4 {
@@ -109,22 +109,6 @@
 	pinctrl-names = "default", "sleep";
 };
 
-/* PWM1 is intended for buzzer control */
-&pwm1 {
-	status = "okay";
-	pinctrl-0 = <&pwm1_default>;
-	pinctrl-1 = <&pwm1_sleep>;
-	pinctrl-names = "default", "sleep";
-};
-
-/* PWM2 is intended for NMOS transistor control */
-&pwm2 {
-	status = "okay";
-	pinctrl-0 = <&pwm2_default>;
-	pinctrl-1 = <&pwm2_sleep>;
-	pinctrl-names = "default", "sleep";
-};
-
 &i2c2 {
 	compatible = "nordic,nrf-twim";
 	status = "okay";
@@ -143,7 +127,7 @@
 		reg = <0x38>;
 		int-gpios = <&gpio0 27 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 	};
-
+	
 	pmic@46 {
 		compatible = "adi,adp5360";
 		reg = <0x46>;
@@ -168,7 +152,7 @@
 		};
 	};
 };
-
+/*
 &spi3 {
 	compatible = "nordic,nrf-spim";
 	status = "okay";
@@ -190,7 +174,7 @@
 		reg = <1>;
 		int1-gpios = <&gpio0 6 0>;
 	};
-};
+};*/
 
 &uart0 {
 	compatible = "nordic,nrf-uarte";
@@ -202,7 +186,7 @@
 };
 
 &uart1 {
-	current-speed = <1000000>;
+	current-speed = <115200>;
 	status = "disabled";
 	pinctrl-0 = <&uart1_default>;
 	pinctrl-1 = <&uart1_sleep>;
