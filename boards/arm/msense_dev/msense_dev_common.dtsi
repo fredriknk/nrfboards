@@ -28,14 +28,6 @@
 			gpios = <&gpio0 5 GPIO_OPEN_DRAIN>;
 			label = "Led 1";
 		};
-		led2: led_2 {
-			gpios = <&gpio0 11 0>;
-			label = "Green LED 3";
-		};
-		led3: led_3 {
-			gpios = <&gpio0 0 0>;
-			label = "Green LED 4";
-		};
 	};
 
 	pwmleds {
@@ -63,14 +55,9 @@
 	aliases {
 		led0 = &led0;
 		led1 = &led1;
-		led2 = &led2;
-		led3 = &led3;
+		bootloader-led0 = &led0;
 		pwm-led0 = &pwm_led0;
 		sw0 = &button0;
-		/*sw1 = &button1;
-		sw2 = &button2;
-		sw3 = &button3;*/
-		bootloader-led0 = &led0;
 		mcuboot-button0 = &button0;
 		mcuboot-led0 = &led0;
 		watchdog0 = &wdt0;
@@ -97,14 +84,97 @@
 	pinctrl-names = "default", "sleep";
 };
 
-&i2c2 {
+&i2c1 {
 	compatible = "nordic,nrf-twim";
 	status = "okay";
 
-	pinctrl-0 = <&i2c2_default>;
-	pinctrl-1 = <&i2c2_sleep>;
+	pinctrl-0 = <&i2c1_default>;
+	pinctrl-1 = <&i2c1_sleep>;
 	pinctrl-names = "default", "sleep";
 };
+
+
+arduino_i2c: &i2c1 {
+	compatible = "nordic,nrf-twim";
+	status = "okay";
+	pinctrl-0 = <&i2c1_default>;
+	pinctrl-1 = <&i2c1_sleep>;
+	pinctrl-names = "default", "sleep";
+	npm1300_ek_pmic: pmic@6b {
+		compatible = "nordic,npm1300";
+		reg = <0x6b>;
+ 
+	 	// long-press-reset = "one_button";
+	 	// ship-to-active-time = <96>;
+ 
+		npm1300_ek_gpio: gpio-controller {
+			compatible = "nordic,npm1300-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <5>;
+		};
+ 
+		npm1300_ek_regulators: regulators {
+			compatible = "nordic,npm1300-regulator";
+ 
+						
+			npm1300_ek_buck1: BUCK1 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				
+				retention-microvolt = <2000000>;
+			};
+			
+
+			npm1300_ek_buck2: BUCK2 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				
+				retention-microvolt = <1000000>;
+			};
+			
+			npm1300_ek_ldo1: LDO1 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+				// soft-start-microamp = <20000>;
+			};
+			
+			npm1300_ek_ldo2: LDO2 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+				// soft-start-microamp = <20000>;
+				regulator-boot-on;
+			};
+			
+		};
+ 
+				
+		npm1300_ek_charger: charger {
+			compatible = "nordic,npm1300-charger";
+			term-microvolt = <3500000>;
+			term-warm-microvolt = <3600000>;
+			// term-current-percent = <10>;
+			current-microamp = <100000>;
+			// trickle-microvolt = <2500000>;
+			dischg-limit-microamp = <1340000>;
+			vbus-limit-microamp = <500000>;
+			thermistor-ohms = <10000>;
+			thermistor-beta = <3380>;
+			charging-enable;
+		};
+		
+				
+		npm1300_ek_leds: leds {
+			compatible = "nordic,npm1300-led";
+			nordic,led0-mode = "error";    
+			nordic,led1-mode = "charging";    
+			nordic,led2-mode = "host";
+		};
+		
+	};
+ };	
 
 &pwm0 {
 	status = "okay";
@@ -114,58 +184,13 @@
 };
 
 
-
-&flash0 {
-
-	partitions {
-		compatible = "fixed-partitions";
-		#address-cells = <1>;
-		#size-cells = <1>;
-
-		boot_partition: partition@0 {
-			label = "mcuboot";
-			reg = <0x00000000 0x10000>;
-		};
-		slot0_partition: partition@10000 {
-			label = "image-0";
-		};
-		slot0_ns_partition: partition@50000 {
-			label = "image-0-nonsecure";
-		};
-		slot1_partition: partition@80000 {
-			label = "image-1";
-		};
-		slot1_ns_partition: partition@c0000 {
-			label = "image-1-nonsecure";
-		};
-		/* 0xf0000 to 0xf7fff reserved for TF-M partitions */
-		storage_partition: partition@f8000 {
-			label = "storage";
-			reg = <0x000f8000 0x00008000>;
-		};
+/* {
+	vbatt {
+		compatible = "voltage-divider";
+		io-channels = <&adc 7>;
+		output-ohms = <100000>;
+		full-ohms = <(100000 + 100000)>;
+		power-gpios = <&gpio0 25 GPIO_ACTIVE_HIGH>;
 	};
-};
+};*/
 
-/ {
-
-	reserved-memory {
-		#address-cells = <1>;
-		#size-cells = <1>;
-		ranges;
-
-		sram0_s: image_s@20000000 {
-			/* Secure image memory */
-		};
-
-		sram0_modem: image_modem@20016000 {
-			/* Modem (shared) memory */
-		};
-
-		sram0_ns: image_ns@20020000 {
-			/* Non-Secure image memory */
-		};
-	};
-};
-
-/* Include partition configuration file */
-#include "msense_dev_partition_conf.dtsi"

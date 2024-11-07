@@ -22,6 +22,16 @@ config FLASH_LOAD_SIZE
 	default $(dt_chosen_reg_size_hex,$(DT_CHOSEN_Z_CODE_PARTITION))
 	depends on BOARD_MSENSEDK_NRF9160 && TRUSTED_EXECUTION_SECURE
 
+# Enable Zephyr power regulator NPM1300
+config REGULATOR  
+	default y
+	depends on !IS_BOOTLOADER_IMG
+
+# Enable Zephyr power regulator NPM1300
+config NPM1300_CHARGER  
+	default y
+	depends on !IS_BOOTLOADER_IMG
+
 if BOARD_MSENSEDK_NRF9160_NS
 
 config FLASH_LOAD_OFFSET
