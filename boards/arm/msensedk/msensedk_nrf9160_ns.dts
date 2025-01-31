@@ -7,6 +7,8 @@
 /dts-v1/;
 #include <nordic/nrf9160ns_sica.dtsi>
 #include "msensedk_nrf9160_common.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <dt-bindings/regulator/npm1300.h>
 
 / {
 	chosen {
@@ -33,9 +35,72 @@
 		reg = <0x76>;
 	};
 
-	/*bh1749: bh1749@38 {
-		compatible = "rohm,bh1749";
-		reg = <0x38>;
-		int-gpios = <&gpio0 27 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-	};*/
+	npm1300_ek_pmic: pmic@6b {
+		compatible = "nordic,npm1300";
+		reg = <0x6b>;
+		//long-press-reset = "one_button";
+		//ship-to-active-time = <1008>;
+
+		npm1300_ek_gpio: gpio-controller {
+			compatible = "nordic,npm1300-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <5>;
+			};
+	 
+		npm1300_ek_regulators: regulators {
+			compatible = "nordic,npm1300-regulator";
+			npm1300_ek_buck1: BUCK1 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-init-microvolt =  <2000000>;
+				retention-microvolt = <2000000>;
+			};
+			
+			npm1300_ek_buck2: BUCK2 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				retention-microvolt = <1000000>;
+			};
+
+			npm1300_ek_ldo1: LDO1 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+				// soft-start-microamp = <20000>;
+				
+			};
+
+			npm1300_ek_ldo2: LDO2 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+				// soft-start-microamp = <20000>;
+				//regulator-boot-on;	
+			};
+		};
+	
+		npm1300_ek_charger: charger {
+			compatible = "nordic,npm1300-charger";
+			term-microvolt = <41500000>;
+			term-warm-microvolt = <4000000>;
+			//term-current-percent = <10>;
+			current-microamp = <500000>;
+			// trickle-microvolt = <2500000>;
+			dischg-limit-microamp = <1340000>;
+			vbus-limit-microamp = <500000>;
+			thermistor-ohms = <10000>;
+			thermistor-beta = <3380>;
+			charging-enable;
+			vbatlow-charge-enable;
+		};
+	
+		npm1300_ek_leds: leds {
+			compatible = "nordic,npm1300-led";
+			nordic,led0-mode = "error";    
+			nordic,led1-mode = "charging";    
+			nordic,led2-mode = "host";
+		};
+	 
+	};
 };
