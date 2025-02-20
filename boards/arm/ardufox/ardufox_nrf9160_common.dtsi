@@ -40,18 +40,25 @@
 		compatible = "pwm-leds";
 		pwm_led0: pwm_led_0 {
 			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+			label = "PWM Green LED 0";
+		};
+
+		pwm_rgb_red_led: pwm_rgb_red_led {
+			pwms = <&pwm1 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+			label = "PWM RGB red channel";
+		};
+		pwm_rgb_green_led: pwm_rgb_green_led {
+			pwms = <&pwm1 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+			label = "PWM RGB green channel";
+		};
+		pwm_rgb_blue_led: pwm_rgb_blue_led {
+			pwms = <&pwm1 2 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+			label = "PWM RGB blue channel";
 		};
 
 	};
 
 	buttons {
-		/*
-		 * Unlike most DK boards, we do not actually have 4 buttons
-		 * on ardufox DK. Instead, we have 2 buttons and 2 switches.
-		 * Treat the switches as buttons anyway, for convenience.
-		 * This makes life easier for software that wants to deal with
-		 * the usual "4 buttons per DK board" convention.
-		 */
 		compatible = "gpio-keys";
 		button0: button_0 {
 			gpios = <&gpio0 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
@@ -103,6 +110,28 @@
 	pinctrl-names = "default", "sleep";
 };
 
+&pwm1 {
+	status = "okay";
+	pinctrl-0 = <&pwm1_default>;
+	pinctrl-1 = <&pwm1_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&spi3 {
+	compatible = "nordic,nrf-spim";
+	status = "okay";
+	cs-gpios = <&gpio0 22 GPIO_ACTIVE_LOW>;
+	pinctrl-0 = <&spi3_default>;
+	pinctrl-1 = <&spi3_sleep>;
+	pinctrl-names = "default", "sleep";
+	adxl362: adxl362@0 {
+		compatible = "adi,adxl362";
+		reg = <0>;
+		spi-max-frequency = <40000000>;
+		int1-gpios = <&gpio0 21 0>;
+
+	};
+};
 
 &flash0 {
 
