@@ -14,9 +14,9 @@ CONFIG_GPIO=y
 
 # ---Disable for low power---
 # Enable uart driver
-CONFIG_SERIAL=n
+CONFIG_SERIAL=y
 
 # enable console
-CONFIG_CONSOLE=n
-CONFIG_UART_CONSOLE=n
+CONFIG_CONSOLE=y
+CONFIG_UART_CONSOLE=y
 # ---------------------------
