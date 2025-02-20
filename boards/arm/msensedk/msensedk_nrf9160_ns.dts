@@ -85,7 +85,7 @@
 			term-microvolt = <41500000>;
 			term-warm-microvolt = <4000000>;
 			//term-current-percent = <10>;
-			current-microamp = <500000>;
+			current-microamp = <800000>;
 			// trickle-microvolt = <2500000>;
 			dischg-limit-microamp = <1340000>;
 			vbus-limit-microamp = <500000>;

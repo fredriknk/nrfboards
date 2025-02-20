@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../ardufox"
+		},
+		{
+			"path": "../../../../../../../../ncs/v2.9.0/zephyr/boards/circuitdojo/feather"
+		},
+		{
+			"name": "nrf_cloud_multi_service_test",
+			"path": "../../../../../../../../ncs/workspace_1/nrf_cloud_multi_service_test"
+		},
+		{
+			"path": "../../../../../../../../ncs/v2.9.0/zephyr/boards/sparkfun/thing_plus"
+		}
+	],
+	"settings": {}
+}
