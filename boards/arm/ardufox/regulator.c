@@ -5,8 +5,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- #include <init.h>
- #include <drivers/gpio.h>
+ #include <zephyr/init.h>
+ #include <zephyr/drivers/gpio.h>
+ #include <zephyr/dt-bindings/input/input-event-codes.h>
  
  #define GPIO0 DT_LABEL(DT_NODELABEL(gpio0))
  #define HPWR_PIN 28
