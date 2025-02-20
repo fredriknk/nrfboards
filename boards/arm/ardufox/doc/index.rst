@@ -84,10 +84,10 @@ hardware features:
 
 .. _ardufox_additional_hardware:
 
-Additional hardware in v0.14.0+
+Additional hardware in v1.0.7+
 -------------------------------
 
-Starting from v0.14.0, additional hardware is available on the DK:
+Starting from v1.0.7, additional hardware is available on the DK:
 
 * External flash memory (MX25R6435F, 64 Mb)
 * I/O expander (PCAL6408A) that can be used to interface LEDs, slide switches,
@@ -384,7 +384,7 @@ such as LEDs and buttons, UART interfaces (VCOMx) of the interface MCU, and
 specific nRF52840 SoC pins.
 
 .. note::
-   In ardufox DK revisions earlier than v0.14.0, nRF9160 signals routed to
+   In ardufox DK revisions earlier than v1.0.7, nRF9160 signals routed to
    other components on the DK are not simultaneously available on the DK
    connectors.
 
@@ -463,7 +463,7 @@ on the ardufox DK:
 | ``nrf_interface_pins_6_8_routing`` | nRF_IF6-8_CTRL (nRF91_COEX)  |
 +------------------------------------+------------------------------+
 
-When building for the DK revision 0.14.0 or later, you can use the following
+When building for the DK revision 1.0.7 or later, you can use the following
 additional nodes (see :ref:`application_board_version` for information how to
 build for specific revisions of the board):
 
