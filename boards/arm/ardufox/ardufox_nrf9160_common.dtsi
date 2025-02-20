@@ -19,20 +19,20 @@
 	leds {
 		compatible = "gpio-leds";
 		led0: led_0 {
-			gpios = <&gpio0 6 0>;
+			gpios = <&gpio0 20 0>;
 			label = "Green LED 1";
 		};
-		led1: led_1 {
-			gpios = <&gpio0 5 0>;
-			label = "Green LED 2";
+		rgb_red_led: led_1 {
+			gpios = <&gpio0 13 0>;
+			label = "RGB red channel";
 		};
-		led2: led_2 {
-			gpios = <&gpio0 11 0>;
-			label = "Green LED 3";
+		rgb_green_led: led_2 {
+			gpios = <&gpio0 14 0>;
+			label = "RGB green channel";
 		};
-		led3: led_3 {
-			gpios = <&gpio0 0 0>;
-			label = "Green LED 4";
+		rgb_blue_led: led_3 {
+			gpios = <&gpio0 15 0>;
+			label = "RGB blue channel";
 		};
 	};
 
@@ -41,6 +41,7 @@
 		pwm_led0: pwm_led_0 {
 			pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
 		};
+
 	};
 
 	buttons {
@@ -53,38 +54,21 @@
 		 */
 		compatible = "gpio-keys";
 		button0: button_0 {
-			gpios = <&gpio0 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			gpios = <&gpio0 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 1";
 			zephyr,code = <INPUT_KEY_0>;
 		};
-		/*button1: button_1 {
-			gpios = <&gpio0 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-			label = "Push button 2";
-			zephyr,code = <INPUT_KEY_1>;
-		};
-		button2: button_2 {
-			gpios = <&gpio0 8 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-			label = "Switch 1";
-			zephyr,code = <INPUT_KEY_2>;
-		};
-		button3: button_3 {
-			gpios = <&gpio0 9 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-			label = "Switch 2";
-			zephyr,code = <INPUT_KEY_3>;
-		};*/
 	};
 
 	/* These aliases are provided for compatibility with samples */
 	aliases {
 		led0 = &led0;
-		led1 = &led1;
-		led2 = &led2;
-		led3 = &led3;
 		pwm-led0 = &pwm_led0;
 		sw0 = &button0;
-		/*sw1 = &button1;
-		sw2 = &button2;
-		sw3 = &button3;*/
+		sense-led0 = &rgb_red_led;
+		sense-led1 = &rgb_green_led;
+		sense-led2 = &rgb_blue_led;
+		rgb-pwm = &pwm1;
 		bootloader-led0 = &led0;
 		mcuboot-button0 = &button0;
 		mcuboot-led0 = &led0;
@@ -110,25 +94,6 @@
 	pinctrl-0 = <&uart0_default>;
 	pinctrl-1 = <&uart0_sleep>;
 	pinctrl-names = "default", "sleep";
-};
-
-arduino_i2c: &i2c2 {
-	compatible = "nordic,nrf-twim";
-	status = "okay";
-	pinctrl-0 = <&i2c2_default>;
-	pinctrl-1 = <&i2c2_sleep>;
-	pinctrl-names = "default", "sleep";
-
-	/*bme680: bme680@76 {
-		compatible = "bosch,bme680";
-		reg = <0x76>;
-	};
-
-	bh1749: bh1749@38 {
-		compatible = "rohm,bh1749";
-		reg = <0x38>;
-		int-gpios = <&gpio0 27 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-	};*/
 };
 
 &pwm0 {

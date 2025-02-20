@@ -3,8 +3,4 @@
 
 if(CONFIG_BOARD_ARDUFOX_NRF9160)
   zephyr_library()
-  zephyr_library_sources(nrf52840_reset.c)
-elseif(CONFIG_BOARD_ARDUFOX_NRF52840)
-  zephyr_library()
-  zephyr_library_sources(board.c)
 endif()
